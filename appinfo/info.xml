@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <id>bagit</id>
+    <name>BagIt</name>
+    <summary>Nextcloud tutorial</summary>
+    <description><![CDATA[Nextcloud tutorial]]></description>
+    <licence>agpl</licence>
+    <author mail="ladd@austin.utexas.edu" homepage="https://github.com/laddhanson/notes/wiki">Ladd Hanson</author>
+    <version>0.0.1</version>
+    <namespace>BagIt</namespace>
+    <category>office</category>
+    <bugs>https://github.com/laddhanson/bagit/issues</bugs>
+    <dependencies>
+        <owncloud min-version="9.2"/>
+        <nextcloud min-version="11" max-version="12"/>
+    </dependencies>
+</info>
