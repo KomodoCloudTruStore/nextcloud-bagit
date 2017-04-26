@@ -10,9 +10,21 @@
     <version>0.0.1</version>
     <namespace>BagIt</namespace>
     <category>office</category>
+    <types><filesystem/></types>
     <bugs>https://github.com/laddhanson/bagit/issues</bugs>
     <dependencies>
         <owncloud min-version="9.2"/>
         <nextcloud min-version="11" max-version="12"/>
     </dependencies>
+    <activity>
+        <providers>
+            <provider>OCA\BagIt\Activity\Provider</provider>
+        </providers>
+        <settings>
+            <setting>OCA\BagIt\Activity\Setting</setting>
+        </settings>
+        <filters>
+            <filter>OCA\BagIt\Activity\Filter</filter>
+        </filters>
+    </activity>
 </info>

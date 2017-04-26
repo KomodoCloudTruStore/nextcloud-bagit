@@ -1,9 +1,15 @@
 <?php
 
 use OCP\AppFramework\App;
+use OCP\Util;
 
 $app = new App('bagit');
 $container = $app->getContainer();
+
+$eventDispatcher = \OC::$server->getEventDispatcher();
+$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', function() {
+    Util::addScript('bagit', 'bagit.plugin' );
+});
 
 $container->query('OCP\INavigationManager')->add(function () use ($container) {
 	$urlGenerator = $container->query('OCP\IURLGenerator');
@@ -17,14 +23,16 @@ $container->query('OCP\INavigationManager')->add(function () use ($container) {
 		'order' => 10,
 
 		// the route that will be shown on startup
-		'href' => $urlGenerator->linkToRoute('bagit.page.index'),
+		'href' => $urlGenerator->linkToRoute('bagit.view.index'),
 
 		// the icon that will be shown in the navigation
 		// this file needs to exist in img/
-		'icon' => $urlGenerator->imagePath('bagit', 'app.svg'),
+		'icon' => $urlGenerator->imagePath('bagit', 'bag.svg'),
 
 		// the title of your application. This will be used in the
 		// navigation or on the settings page of your app
 		'name' => $l10n->t('BagIt'),
 	];
 });
+
+
