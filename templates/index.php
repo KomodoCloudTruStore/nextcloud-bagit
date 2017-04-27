@@ -49,6 +49,18 @@
         </ul>
 
     </div>
+    <div id="app-settings">
+        <div id="app-settings-header">
+            <button class="settings-button" data-apps-slide-toggle="#app-settings-content">
+                Settings			</button>
+        </div>
+        <div id="app-settings-content">
+            <div id="files-setting-showhidden">
+                <input class="checkbox" id="showhiddenfilesToggle" checked="checked" type="checkbox">
+                <label for="showhiddenfilesToggle">Enable FITS services</label>
+            </div>
+        </div>
+    </div>
 
 	<div id="app-content">
 
