@@ -6,11 +6,6 @@ use OCP\Util;
 $app = new App('bagit');
 $container = $app->getContainer();
 
-$eventDispatcher = \OC::$server->getEventDispatcher();
-$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', function() {
-    Util::addScript('bagit', 'bagit.plugin' );
-});
-
 $container->query('OCP\INavigationManager')->add(function () use ($container) {
 	$urlGenerator = $container->query('OCP\IURLGenerator');
 	$l10n = $container->query('OCP\IL10N');
@@ -27,7 +22,7 @@ $container->query('OCP\INavigationManager')->add(function () use ($container) {
 
 		// the icon that will be shown in the navigation
 		// this file needs to exist in img/
-		'icon' => $urlGenerator->imagePath('bagit', 'bag.svg'),
+		'icon' => $urlGenerator->imagePath('bagit', 'bagit-black.svg'),
 
 		// the title of your application. This will be used in the
 		// navigation or on the settings page of your app

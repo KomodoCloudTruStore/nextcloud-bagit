@@ -10,9 +10,6 @@
  */
 return [
     'routes' => [
-        ['name' => 'view#index', 'url' => '/', 'verb' => 'GET'],
-        ['name' => 'view#create', 'url' => '/bags/{id}', 'verb' => 'POST'],
-        ['name' => 'view#show', 'url' => '/bags/{id}', 'verb' => 'GET'],
-        ['name' => 'view#availableBags', 'url' => '/bags', 'verb' => 'GET'],
+        ['name' => 'view#index', 'url' => '/', 'verb' => 'GET']
     ]
 ];
