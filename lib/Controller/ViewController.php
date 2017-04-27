@@ -2,24 +2,16 @@
 
 namespace OCA\BagIt\Controller;
 
-use OCA\BagIt\Service\BagItService;
-use OCP\AppFramework\Http\RedirectResponse;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 
 
 class ViewController extends Controller {
 
-    protected $service;
-    protected $fileView;
-
-    public function __construct($appName, IRequest $request, BagItService $service) {
+    public function __construct($appName, IRequest $request) {
 
         parent::__construct($appName, $request);
-
-        $this->service = $service;
 
 
     }
