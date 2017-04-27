@@ -1,32 +1,14 @@
 <?php
 
-use OCP\AppFramework\App;
+\OC::$server->getNavigationManager()->add(function () {
+    $urlGenerator = \OC::$server->getURLGenerator();
+    return [
 
-$app = new App('bagit');
-$container = $app->getContainer();
+        'id' => 'bagit',
+        'order' => 10,
+        'href' => $urlGenerator->linkToRoute('bagit.view.index'),
+        'icon' => $urlGenerator->imagePath('bagit', 'app.svg'),
+        'name' => \OC::$server->getL10N('bagit')->t('BagIt'),
+    ];
 
-$container->query('OCP\INavigationManager')->add(function () use ($container) {
-	$urlGenerator = $container->query('OCP\IURLGenerator');
-	$l10n = $container->query('OCP\IL10N');
-	return [
-		// the string under which your app will be referenced in Nextcloud
-		'id' => 'bagit',
-
-		// sorting weight for the navigation. The higher the number, the higher
-		// will it be listed in the navigation
-		'order' => 10,
-
-		// the route that will be shown on startup
-		'href' => $urlGenerator->linkToRoute('bagit.view.index'),
-
-		// the icon that will be shown in the navigation
-		// this file needs to exist in img/
-		'icon' => $urlGenerator->imagePath('bagit', 'app.svg'),
-
-		// the title of your application. This will be used in the
-		// navigation or on the settings page of your app
-		'name' => $l10n->t('BagIt'),
-	];
 });
-
-

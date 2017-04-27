@@ -10,7 +10,6 @@
     <version>0.0.2</version>
     <namespace>BagIt</namespace>
     <category>office</category>
-    <types><filesystem/></types>
     <bugs>https://github.com/laddhanson/bagit/issues</bugs>
     <dependencies>
         <owncloud min-version="9.2"/>
