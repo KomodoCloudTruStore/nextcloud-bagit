@@ -1,3 +1,7 @@
 .nav-icon-bagit-black {
 	background-image: url('../img/bagit-black.svg');
 }
+
+.nav-icon-upload {
+	background-image: url('../img/upload.svg');
+}

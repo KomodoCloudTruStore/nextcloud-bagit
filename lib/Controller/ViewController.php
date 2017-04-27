@@ -39,32 +39,4 @@ class ViewController extends Controller {
         return new TemplateResponse('bagit', 'index');  // templates/index.php
     }
 
-    public function availableBags()
-    {
-
-        return new DataResponse($this->service->getBags());
-
-    }
-
-    public function create($id)
-    {
-
-        $this->service->createBag($id);
-
-        return new DataResponse($id);
-
-    }
-
-    /**
-     * @NoCSRFRequired
-     * @NoAdminRequired
-     */
-
-    public function show($id)
-    {
-
-        return new TemplateResponse('bagit', 'show', ['items' => $this->service->getABag($id)]);
-
-    }
-
 }
