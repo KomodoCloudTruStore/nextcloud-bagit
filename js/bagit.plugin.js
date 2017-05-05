@@ -23,7 +23,7 @@
                 order: -20,
                 mime: 'all',
                 permissions: OC.PERMISSION_READ,
-                iconClass: 'icon-file',
+                iconClass: 'icon-bagit',
                 actionHandler: function (filename, context) {
 
                     var fileId = context.fileInfoModel.attributes.id;
@@ -39,7 +39,7 @@
                         async: true,
                         success: function(data) {
 
-                            window.location.href = OC.generateUrl('/apps/bagit/bags/' + data);
+                            window.location.href = OC.generateUrl('/apps/bagit/');
 
                         }
 
@@ -47,6 +47,7 @@
 
                 }
             });
+            fileList.registerTabView(new OCA.BagIt.BagItTabView('bagiItTabView', {}));
 
         }
     };

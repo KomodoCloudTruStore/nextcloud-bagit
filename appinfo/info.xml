@@ -7,15 +7,10 @@
     <description><![CDATA[Nextcloud tutorial]]></description>
     <licence>agpl</licence>
     <author mail="ladd@austin.utexas.edu" homepage="https://github.com/laddhanson/notes/wiki">Ladd Hanson</author>
-    <version>0.0.1</version>
+    <version>0.0.4</version>
     <namespace>BagIt</namespace>
     <category>office</category>
-    <types><filesystem/></types>
     <bugs>https://github.com/laddhanson/bagit/issues</bugs>
-    <dependencies>
-        <owncloud min-version="9.2"/>
-        <nextcloud min-version="11" max-version="12"/>
-    </dependencies>
     <activity>
         <providers>
             <provider>OCA\BagIt\Activity\Provider</provider>
@@ -27,4 +22,8 @@
             <filter>OCA\BagIt\Activity\Filter</filter>
         </filters>
     </activity>
+    <dependencies>
+        <owncloud min-version="9.2"/>
+        <nextcloud min-version="11" max-version="12"/>
+    </dependencies>
 </info>

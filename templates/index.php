@@ -47,9 +47,19 @@
             </li>
 
         </ul>
-
+        <div id="app-settings">
+            <div id="app-settings-header">
+                <button class="settings-button" data-apps-slide-toggle="#app-settings-content">
+                    Settings			</button>
+            </div>
+            <div id="app-settings-content">
+                <div id="files-setting-showhidden">
+                    <input class="checkbox" id="showhiddenfilesToggle" checked="checked" type="checkbox">
+                    <label for="showhiddenfilesToggle">Enable FITS Services</label>
+                </div>
+            </div>
+        </div>
     </div>
-
 	<div id="app-content">
 
         <div id="app-content-files" class="viewcontainer hide-hidden-files has-favorites has-comments" style="min-height: initial;">
@@ -79,10 +89,6 @@
                 <tr>
                     <th id="headerName" class="column-name">
                         <div id="headerName-container">
-                            <input type="checkbox" id="select_all_files" class="select-all checkbox">
-                            <label for="select_all_files">
-                                <span class="hidden-visually">Select all</span>
-                            </label>
                             <a class="name sort columntitle" data-sort="name"><span>Name</span><span class="sort-indicator icon-triangle-n"></span></a>
                             <span id="selectedActionsList" class="selectedActions hidden">
 						        <a href="" class="download" data-original-title="" title="">
@@ -110,148 +116,15 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody id="fileList">
-                    <tr data-id="26" data-type="dir" data-size="34" data-file=".bagit" data-mime="httpd/unix-directory" data-mtime="1493203424000" data-etag="590079e0d0155" data-permissions="31" data-has-preview="false" data-path="/" data-share-permissions="31" class="ui-droppable hidden-file">
-                        <td class="filename ui-draggable">
-                            <a href="#" class="action action-favorite " data-original-title="" title="">
-                                <span class="icon icon-star"></span>
-                                <span class="hidden-visually">Favorite</span>
-                            </a>
-                            <input id="select-files-26" type="checkbox" class="selectCheckBox checkbox">
-                            <label for="select-files-26">
-                                <div class="thumbnail" style="background-image:url(/index.php/apps/theming/img/core/filetypes/folder.svg?v=0); background-size: 32px;"></div>
-                                <span class="hidden-visually">Select</span>
-                            </label>
-                            <a class="name" href="/index.php/apps/files?dir=//.bagit">
-                                <span class="nametext">
-                                    <span class="innernametext"></span>
-                                    <span class="extension">.bagit</span>
-                                </span>
-                                <span class="uploadtext" currentuploads="0"></span>
-                                <span class="fileactions">
-                                    <a class="action action-share permanent" href="#" data-action="Share" data-original-title="" title="">
-                                        <span class="icon icon-share"></span>
-                                        <span class="hidden-visually">Share</span></a>
-                                    <a class="action action-menu permanent" href="#" data-action="menu" data-original-title="" title="">
-                                        <span class="icon icon-more"></span><span class="hidden-visually">Actions</span>
-                                    </a>
-                                </span>
-                            </a>
-                        </td>
-                        <td class="filesize" style="color:rgb(160,160,160)">&lt; 1 KB</td>
-                        <td class="date">
-                            <span class="modified live-relative-timestamp" title="" data-timestamp="1493203424000" style="color:rgb(5,5,5)" data-original-title="April 26, 2017 5:43 AM">a day ago</span>
-                        </td>
-                    </tr>
-                    <tr data-id="3" data-type="dir" data-size="78496" data-file="Documents" data-mime="httpd/unix-directory" data-mtime="1493201860000" data-etag="590073c431579" data-permissions="31" data-has-preview="false" data-path="/" data-share-permissions="31" class="ui-droppable">
-                        <td class="filename ui-draggable">
-                            <a href="#" class="action action-favorite " data-original-title="" title="">
-                                <span class="icon icon-star"></span>
-                                <span class="hidden-visually">Favorite</span>
-                            </a>
-                            <input id="select-files-3" type="checkbox" class="selectCheckBox checkbox">
-                            <label for="select-files-3">
-                                <div class="thumbnail" style="background-image:url(/index.php/apps/theming/img/core/filetypes/folder.svg?v=0); background-size: 32px;">
+                <tbody id="bagList">
 
-                                </div>
-                                <span class="hidden-visually">Select</span>
-                            </label>
-                            <a class="name" href="#">
-                                <span class="nametext">
-                                    <span class="innernametext">collection01.tar.gz</span>
-                                </span>
-                                <span class="uploadtext" currentuploads="0"></span>
-                            </a>
-                        </td>
-                        <td style="color:rgb(110,160,78)">
 
-                            <span class="nametext">100%</span>
-
-                        </td>
-                        <td style="color:rgb(110,160,78)">
-
-                            <span class="nametext">100%</span>
-
-                        </td>
-                        <td class="filesize" style="color:rgb(160,160,160)">124.3 TB</td>
-                        <td class="date">
-                            <span class="modified live-relative-timestamp" title="" data-timestamp="1493201860000" style="color:rgb(5,5,5)" data-original-title="April 26, 2017 5:17 AM">a day ago</span>
-                        </td>
-                    </tr>
-                    <tr data-id="3" data-type="dir" data-size="78496" data-file="Documents" data-mime="httpd/unix-directory" data-mtime="1493201860000" data-etag="590073c431579" data-permissions="31" data-has-preview="false" data-path="/" data-share-permissions="31" class="ui-droppable">
-                        <td class="filename ui-draggable">
-                            <a href="#" class="action action-favorite " data-original-title="" title="">
-                                <span class="icon icon-star"></span>
-                                <span class="hidden-visually">Favorite</span>
-                            </a>
-                            <input id="select-files-3" type="checkbox" class="selectCheckBox checkbox">
-                            <label for="select-files-3">
-                                <div class="thumbnail" style="background-image:url(/index.php/apps/theming/img/core/filetypes/folder.svg?v=0); background-size: 32px;">
-
-                                </div>
-                                <span class="hidden-visually">Select</span>
-                            </label>
-                            <a class="name" href="#">
-                                <span class="nametext">
-                                    <span class="innernametext">collection02.tar.gz</span>
-                                </span>
-                                <span class="uploadtext" currentuploads="0"></span>
-                            </a>
-                        </td>
-                        <td style="color:rgb(110,160,78)">
-
-                            <span class="nametext">100%</span>
-
-                        </td>
-                        <td style="color:rgb(226,202,34)">
-
-                            <span class="nametext">34%</span>
-
-                        </td>
-                        <td class="filesize" style="color:rgb(160,160,160)">20.2 GB</td>
-                        <td class="date">
-                            <span class="modified live-relative-timestamp" style="color:rgb(5,5,5)">a second ago</span>
-                        </td>
-                    </tr>
-                    <tr data-id="3" data-type="dir" data-size="78496" data-file="Documents" data-mime="httpd/unix-directory" data-mtime="1493201860000" data-etag="590073c431579" data-permissions="31" data-has-preview="false" data-path="/" data-share-permissions="31" class="ui-droppable">
-                        <td class="filename ui-draggable">
-                            <a href="#" class="action action-favorite " data-original-title="" title="">
-                                <span class="icon icon-star"></span>
-                                <span class="hidden-visually">Favorite</span>
-                            </a>
-                            <input id="select-files-3" type="checkbox" class="selectCheckBox checkbox">
-                            <label for="select-files-3">
-                                <div class="thumbnail" style="background-image:url(/index.php/apps/theming/img/core/filetypes/folder.svg?v=0); background-size: 32px;">
-
-                                </div>
-                                <span class="hidden-visually">Select</span>
-                            </label>
-                            <a class="name" href="#">
-                                <span class="nametext">
-                                    <span class="innernametext">skunkworks-collection.tar.gz</span>
-                                </span>
-                                <span class="uploadtext" currentuploads="0"></span>
-                            </a>
-                        </td>
-                        <td style="color:rgb(160,34,10)">
-
-                            <span class="nametext">Network Error</span>
-
-                        </td>
-                        <td style="color:rgb(110,160,78)">
-
-                            <span class="nametext">100%</span>
-
-                        </td>
-                        <td class="filesize" style="color:rgb(160,160,160)">555.2 TB</td>
-                        <td class="date">
-                            <span class="modified live-relative-timestamp" style="color:rgb(5,5,5)">a second ago</span>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
 
     </div>
 </div>
+
+<?php script('bagit', 'bagit.content'); ?>
 

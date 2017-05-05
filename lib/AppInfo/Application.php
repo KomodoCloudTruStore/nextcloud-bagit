@@ -3,9 +3,9 @@
 namespace OCA\BagIt\AppInfo;
 
 use \OCP\AppFramework\App;
+use \OCA\BagIt\Controller\BagItController;
 use \OCA\BagIt\Service\BagItService;
-use \OCA\BagIt\Controller\ViewController;
-use \OCA\BagIt\Storage\BagItStorage;
+use \OCA\BagIt\Db\BagItBagMapper;
 
 
 class Application extends App {
@@ -15,12 +15,13 @@ class Application extends App {
         parent::__construct('bagit', $urlParams);
 
         $container = $this->getContainer();
+
         /*
          * Controllers
          */
 
-        $container->registerService('ViewController', function($c){
-            return new ViewController(
+        $container->registerService('BagItController', function ($c) {
+            return new BagItController(
                 $c->query('AppName'),
                 $c->query('Request'),
                 $c->query('BagItService')
@@ -30,24 +31,19 @@ class Application extends App {
         /**
          * Services
          */
-
-        $container->registerService('BagItService', function($c) {
+        $container->registerService('BagItService', function ($c) {
             return new BagItService(
-
                 $c->query('ServerContainer')->getActivityManager(),
                 $c->query('ServerContainer')->getUserSession(),
-                $c->query('BagItStorage')
-
+                $c->query('BagItBagMapper')
             );
         });
-
         /**
-         * Storage
+         * Mappers
          */
-
-        $container->registerService('BagItStorage', function($c){
-            return new BagItStorage(
-                $c->query('ServerContainer')->getUserFolder()
+        $container->registerService('BagItBagMapper', function ($c) {
+            return new BagItBagMapper(
+                $c->query('ServerContainer')->getDb()
             );
         });
 
