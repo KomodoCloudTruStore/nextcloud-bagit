@@ -61,7 +61,9 @@
                 label.css('width', '50px');
                 label.css('z-index', '5');
 
-                var iconUrl = '/apps/bagit/img/bagit-blue.svg';
+                //var iconUrl = '/apps/bagit/img/bagit-blue.svg';
+
+                var iconUrl = OC.generateUrl('/apps/bagit/img/bagit-blue.svg');
 
                 var thumbnail = $('<div></div>');
                 thumbnail.attr('class', 'thumbnail');
