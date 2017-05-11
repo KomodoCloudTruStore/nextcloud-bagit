@@ -219,9 +219,9 @@ class BagitStorage {
 
         foreach($this->getBags() as $bag) {
 
-            $bagObj = [];
-
             try {
+
+                $bagObj = [];
 
                 $dataFolder = $bag->get('/data');
                 $rootDataFolder = $dataFolder->getDirectoryListing()[0];
@@ -236,7 +236,7 @@ class BagitStorage {
 
             } catch (Exception $e) {
 
-
+                $bagObj = [];
 
             }
 

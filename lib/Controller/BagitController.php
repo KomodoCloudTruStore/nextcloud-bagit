@@ -1,7 +1,7 @@
 <?php
 namespace OCA\Bagit\Controller;
 
-use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
@@ -39,7 +39,7 @@ class BagitController extends Controller
      * @NoAdminRequired
      */
     public function index() {
-        return new JSONResponse($this->service->index());
+        return new DataResponse($this->service->index());
     }
 
     /**
@@ -50,7 +50,7 @@ class BagitController extends Controller
 
     public function show($id)
     {
-        return new JSONResponse($this->service->show($id));
+        return new DataResponse($this->service->show($id));
     }
 
     /**
