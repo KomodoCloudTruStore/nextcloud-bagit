@@ -9,7 +9,7 @@ use OCP\AppFramework\Controller;
 
 use OCA\BagIt\Service\BagItService;
 
-class BagItController extends Controller
+class BagitController extends Controller
 {
 
     use Errors;
