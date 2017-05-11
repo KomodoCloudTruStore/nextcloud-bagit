@@ -219,28 +219,26 @@ class BagitStorage {
 
         foreach($this->getBags() as $bag) {
 
-            $dataFolder = $bag->get('/data');
-            $rootDataFolder = $dataFolder->getDirectoryListing()[0];
-
             $bagObj = [];
-
-            $bagObj['id'] = $bag->getId();
 
             try {
 
+                $dataFolder = $bag->get('/data');
+                $rootDataFolder = $dataFolder->getDirectoryListing()[0];
+
+                $bagObj['id'] = $bag->getId();
                 $bagObj['name'] = $rootDataFolder->getName();
+                $bagObj['replica_d'] = 100;
+                $bagObj['replica_sm'] = 100;
+                $bagObj['size'] = $bag->getSize();
+                $bagObj['timestamp'] = $bag->getMTime();
+                $bagObj['type'] = 'bag';
 
             } catch (Exception $e) {
 
-                $bagObj['name'] = 'Unknown';
+
 
             }
-
-            $bagObj['replica_d'] = 100;
-            $bagObj['replica_sm'] = 100;
-            $bagObj['size'] = $bag->getSize();
-            $bagObj['timestamp'] = $bag->getMTime();
-            $bagObj['type'] = 'bag';
 
             array_push($jsonArray, $bagObj);
 
