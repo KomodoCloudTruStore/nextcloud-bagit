@@ -1,5 +1,4 @@
 <?php
-
 namespace OCA\Bagit\Controller;
 
 use OCP\AppFramework\Http\JSONResponse;
@@ -25,7 +24,6 @@ class BagitController extends Controller
 
         $this->service = $service;
         $this->activityManager = $server->getActivityManager();
-
 
     }
 
