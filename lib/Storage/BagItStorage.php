@@ -223,11 +223,8 @@ class BagitStorage {
 
                 $bagObj = [];
 
-                $dataFolder = $bag->get('/data');
-                $rootDataFolder = $dataFolder->getDirectoryListing()[0];
-
                 $bagObj['id'] = $bag->getId();
-                $bagObj['name'] = $rootDataFolder->getName();
+                $bagObj['name'] = 'Test';
                 $bagObj['replica_d'] = 100;
                 $bagObj['replica_sm'] = 100;
                 $bagObj['size'] = $bag->getSize();
