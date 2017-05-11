@@ -1,0 +1,21 @@
+{
+  "name": "komodo-cloud/nextcloud-bagit",
+  "description": "A Nextcloud App that adds BagIt functionality to the file system.",
+  "keywords": ["BagIt", "nextcloud", "bagit"],
+  "type": "Library",
+  "homepage": "https://github.com/KomodoCloudTruStore/nextcloud-bagit",
+  "license": "https://github.com/KomodoCloudTruStore/nextcloud-bagit/blob/master/COPYING",
+  "authors": [
+    {
+      "name": "Komoto Cloud",
+      "homepage": "https://github.com/KomodoCloudTruStore/nextcloud-bagit/graphs/contributors"
+    }
+  ],
+  "require": {
+    "php": "^7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0",
+    "mockery/mockery": "~0.8"
+  }
+}

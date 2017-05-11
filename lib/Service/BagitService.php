@@ -41,7 +41,9 @@ class BagItService
 
     public function createBag($id) {
 
-        $this->storage->makeBag($id);
+        $node = $this->storage->getFilesAppNode($id);
+
+        $this->storage->createBag($node);
 
     }
 
@@ -72,20 +74,14 @@ class BagItService
 
     public function index()
     {
-        try {
-            return $this->mapper->findAll();
-        } catch (Exception $e) {
-            $this->handleException($e);
-        }
+
+        return $this->storage->getBagsAsJSON();
+
     }
 
     public function show($id)
     {
-        try {
-            return $this->mapper->show($id);
-        } catch (Exception $e) {
-            $this->handleException($e);
-        }
+        return $this->storage->getBagContents($id);
     }
 
     public function create($id)

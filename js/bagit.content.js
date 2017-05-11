@@ -23,6 +23,11 @@
         },
         populateList: function (data) {
 
+            var self = this;
+
+            var bagListTable = $('#bagList');
+            bagListTable.empty();
+
             var baseUrl = window.location.protocol + '//' + window.location.hostname;
 
             if (window.location.port !== '') {
@@ -61,14 +66,25 @@
                 label.css('width', '50px');
                 label.css('z-index', '5');
 
-                //var iconUrl = '/apps/bagit/img/bagit-blue.svg';
-
-                var iconUrl = OC.generateUrl('/apps/bagit/img/bagit-blue.svg');
-
                 var thumbnail = $('<div></div>');
-                thumbnail.attr('class', 'thumbnail');
-                thumbnail.css('background-image', 'url(' + baseUrl + iconUrl + ')');
-                thumbnail.css('background-size', '32px 32px');
+
+                if (row['type'] === 'bag') {
+
+                    thumbnail.attr('class', 'thumbnail nav-icon-bagit-blue');
+
+                }
+
+                if (row['type'] === 'dir') {
+
+                    thumbnail.attr('class', 'thumbnail icon-filetype-folder');
+
+                }
+
+                if (row['type'] === 'file') {
+
+                    thumbnail.attr('class', 'thumbnail icon-filetype-text');
+
+                }
 
                 var hiddenSpan = $('<span></span>');
                 hiddenSpan.attr('class', 'hidden-visually');
@@ -79,9 +95,17 @@
 
                 var nameLink = $('<a></a>');
                 nameLink.attr('class', 'name');
-                nameLink.attr('href', '#');
+                nameLink.attr('href', OC.generateUrl('/apps/bagit/bags/' + row['id']));
                 nameLink.css('left', '50px');
                 nameLink.css('margin-right', '50px');
+
+                nameLink.click(function($e) {
+
+                    $e.preventDefault();
+
+                    self.fetchBagContent($(this).attr('href'));
+
+                });
 
                 var nameText = $('<span></span>');
                 nameText.attr('class', 'nametext');
@@ -166,9 +190,28 @@
                 tr.append(fileSize);
                 tr.append(modified);
 
-                $('#bagList').append(tr);
+                bagListTable.append(tr);
 
             }
+
+        },
+        fetchBagContent: function (url) {
+
+            _self = this;
+
+            $.ajax({
+
+                type: 'GET',
+                url: url,
+                async: true,
+                success: function(data) {
+
+                    var parsed = JSON.parse(data);
+                    _self.populateList(parsed);
+
+                }
+
+            });
 
         },
         fetchItems: function () {
@@ -183,7 +226,8 @@
                 async: true,
                 success: function(data) {
 
-                    _self.populateList(data);
+                   var parsed = JSON.parse(data);
+                    _self.populateList(parsed);
 
                 }
 
