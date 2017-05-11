@@ -19,7 +19,7 @@
  *
  */
 
-namespace OCA\BagIt\Activity;
+namespace OCA\Bagit\Activity;
 
 use OCP\Activity\IFilter;
 use OCP\IL10N;

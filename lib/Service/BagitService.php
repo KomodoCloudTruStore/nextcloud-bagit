@@ -1,17 +1,17 @@
 <?php
 
-namespace OCA\BagIt\Service;
+namespace OCA\Bagit\Service;
 
-use OCA\BagIt\Storage\BagItStorage;
+use OCA\Bagit\Storage\BagitStorage;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\Activity\IManager;
 use OCP\IUserSession;
 use OCP\IUser;
-use OCA\BagIt\Db\BagItBag;
-use OCA\BagIt\Db\BagItBagMapper;
+use OCA\Bagit\Db\BagitBag;
+use OCA\Bagit\Db\BagitBagMapper;
 
-class BagItService
+class BagitService
 {
 
     private $mapper;
@@ -19,7 +19,7 @@ class BagItService
     private $storage;
     protected $session;
 
-    public function __construct(IManager $activity, IUserSession $session, BagItBagMapper $mapper, BagItStorage $storage)
+    public function __construct(IManager $activity, IUserSession $session, BagitBagMapper $mapper, BagitStorage $storage)
     {
         $this->mapper = $mapper;
         $this->activityManager = $activity;
@@ -32,7 +32,7 @@ class BagItService
         if ($e instanceof DoesNotExistException ||
             $e instanceof MultipleObjectsReturnedException
         ) {
-            throw new BagItServiceNotFoundException($e->getMessage());
+            throw new BagitServiceNotFoundException($e->getMessage());
         } else {
             throw $e;
         }
@@ -88,7 +88,7 @@ class BagItService
 
         $this->createBag($id);
 
-        $bag = new BagItBag();
+        $bag = new BagitBag();
         $bag->setFileId($id);
         $bag->setName('collection-' . $id . '.tar.gz');
         $bag->setReplicaD(0);

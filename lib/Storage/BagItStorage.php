@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\BagIt\Storage;
+namespace OCA\Bagit\Storage;
 
 use \DateTime;
 
@@ -8,7 +8,7 @@ use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\Node;
 
-class BagItStorage {
+class BagitStorage {
 
     private $userId;
     private $userFilesFolder;

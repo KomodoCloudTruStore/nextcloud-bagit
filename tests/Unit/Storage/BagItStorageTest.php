@@ -1,12 +1,12 @@
 <?php
 
-namespace OCA\BagIt\Tests\Storage;
+namespace OCA\Bagit\Tests\Storage;
 
-use \OCA\BagIt\Storage\BagItStorage;
+use \OCA\Bagit\Storage\BagItStorage;
 use PHPUnit_Framework_TestCase;
 
 
-class BagItStorageTest extends PHPUnit_Framework_TestCase {
+class BagitStorageTest extends PHPUnit_Framework_TestCase {
 
     public $storage;
 
@@ -14,7 +14,7 @@ class BagItStorageTest extends PHPUnit_Framework_TestCase {
 
         parent::setUp();
 
-        $this->storage = new BagItStorage('admin');
+        $this->storage = new BagitStorage('admin');
 
     }
 
@@ -29,7 +29,7 @@ class BagItStorageTest extends PHPUnit_Framework_TestCase {
     public function testInit()
     {
 
-        $this->storage = new BagItStorage('admin');
+        $this->storage = new BagitStorage('admin');
 
         $this->assertTrue(true);
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace OCA\BagIt\Controller;
+namespace OCA\Bagit\Controller;
 
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
 
-use OCA\BagIt\Service\BagItService;
+use OCA\Bagit\Service\BagitService;
 
-class BagItController extends Controller
+class BagitController extends Controller
 {
 
     use Errors;
@@ -17,7 +17,7 @@ class BagItController extends Controller
     private $service;
     private $activityManager;
 
-    public function __construct($AppName, IRequest $request, BagItService $service)
+    public function __construct($AppName, IRequest $request, BagitService $service)
     {
 
         parent::__construct($AppName, $request);

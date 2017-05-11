@@ -1,15 +1,15 @@
 <?php
 
-namespace OCA\BagIt\Db;
+namespace OCA\Bagit\Db;
 
 use OCP\IDb;
 use OCP\AppFramework\Db\Mapper;
 
-class BagItBagMapper extends Mapper
+class BagitBagMapper extends Mapper
 {
     public function __construct(IDb $db)
     {
-        parent::__construct($db, 'bagit_bags', '\OCA\BagIt\Db\BagItBag');
+        parent::__construct($db, 'bagit_bags', '\OCA\Bagit\Db\BagitBag');
     }
 
     /**

@@ -1,11 +1,11 @@
 <?php
 
-namespace OCA\BagIt\Db;
+namespace OCA\Bagit\Db;
 
 use OCP\AppFramework\Db\Entity;
 use JsonSerializable;
 
-class BagItBag extends Entity implements JsonSerializable
+class BagitBag extends Entity implements JsonSerializable
 {
 
     protected $fileId;

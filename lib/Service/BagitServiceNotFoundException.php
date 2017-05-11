@@ -1,7 +1,5 @@
 <?php
 
-namespace OCA\BagIt\Service;
+namespace OCA\Bagit\Service;
 
-class BagItServiceNotFoundException extends BagItServiceException
-{
-}
+class BagitServiceNotFoundException extends BagitServiceException { }
