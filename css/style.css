@@ -2,6 +2,11 @@
 	background-image: url('../img/bagit-black.svg');
 }
 
+.nav-icon-bagit-blue {
+	background-image: url('../img/bagit-blue.svg');
+	background-size: 32px 32px;
+}
+
 .nav-icon-upload {
 	background-image: url('../img/upload.svg');
 }
@@ -9,5 +14,12 @@
 .icon-bagit {
 
 	background-image: url('../img/bagit-black.svg');
+
+}
+
+.nav-icon-file {
+
+	background-image: url('/apps/theming/img/core/filetypes/x-office-document.svg');
+	background-size: 32px;
 
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace OCA\Bagit\Controller;
+namespace OCA\BagIt\Controller;
 
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
 
-use OCA\BagIt\Service\BagitService;
+use OCA\BagIt\Service\BagItService;
 
 class BagItController extends Controller
 {
@@ -17,7 +17,7 @@ class BagItController extends Controller
     private $service;
     private $activityManager;
 
-    public function __construct($appName, IRequest $request, BagitService $service)
+    public function __construct($appName, IRequest $request, BagItService $service)
     {
 
         parent::__construct($appName, $request);
@@ -43,7 +43,7 @@ class BagItController extends Controller
      * @NoAdminRequired
      */
     public function index() {
-        return new DataResponse($this->service->index());
+        return new JSONResponse($this->service->index());
     }
 
     /**
@@ -51,11 +51,10 @@ class BagItController extends Controller
      *
      * @param int $file_id
      */
+
     public function show($id)
     {
-        return $this->handleNotFound(function () use ($id) {
-            return $this->service->show($id);
-        });
+        return new JSONResponse($this->service->show($id));
     }
 
     /**

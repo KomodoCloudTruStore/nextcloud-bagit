@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Bagit\Activity;
+namespace OCA\BagIt\Activity;
 
 use OCP\Activity\ISetting;
 use OCP\IL10N;

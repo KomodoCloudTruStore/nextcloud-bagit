@@ -2,28 +2,29 @@
 
 namespace OCA\BagIt\Service;
 
-use Exception;
-use OCA\BagIt\Service\BagitNotFoundException;
+use OCA\BagIt\Storage\BagItStorage;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\Activity\IManager;
 use OCP\IUserSession;
 use OCP\IUser;
-use OCA\BagIt\Db\BagitBag;
-use OCA\BagIt\Db\BagitBagMapper;
+use OCA\BagIt\Db\BagItBag;
+use OCA\BagIt\Db\BagItBagMapper;
 
-class BagitService
+class BagItService
 {
 
     private $mapper;
     private $activityManager;
+    private $storage;
     protected $session;
 
-    public function __construct(IManager $activity, IUserSession $session, BagitBagMapper $mapper)
+    public function __construct(IManager $activity, IUserSession $session, BagitBagMapper $mapper, BagItStorage $storage)
     {
         $this->mapper = $mapper;
         $this->activityManager = $activity;
         $this->session = $session;
+        $this->storage = $storage;
     }
 
     private function handleException($e)
@@ -31,10 +32,18 @@ class BagitService
         if ($e instanceof DoesNotExistException ||
             $e instanceof MultipleObjectsReturnedException
         ) {
-            throw new BagitNotFoundException($e->getMessage());
+            throw new BagItServiceNotFoundException($e->getMessage());
         } else {
             throw $e;
         }
+    }
+
+    public function createBag($id) {
+
+        $node = $this->storage->getFilesAppNode($id);
+
+        $this->storage->createBag($node);
+
     }
 
     public function validate()
@@ -64,24 +73,20 @@ class BagitService
 
     public function index()
     {
-        try {
-            return $this->mapper->findAll();
-        } catch (Exception $e) {
-            $this->handleException($e);
-        }
+
+        return $this->storage->getBagsAsJSON();
+
     }
 
     public function show($id)
     {
-        try {
-            return $this->mapper->show($id);
-        } catch (Exception $e) {
-            $this->handleException($e);
-        }
+        return $this->storage->getBagContents($id);
     }
 
     public function create($id)
     {
+
+        $this->createBag($id);
 
         $bag = new BagItBag();
         $bag->setFileId($id);

@@ -5,7 +5,7 @@ namespace OCA\BagIt\Controller;
 use Closure;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
-use OCA\BagIt\Service\BagItNotFoundException;
+use OCA\BagIt\Service\BagItServiceNotFoundException;
 
 trait Errors
 {
@@ -13,7 +13,7 @@ trait Errors
     {
         try {
             return new DataResponse($callback());
-        } catch (BagitNotFoundException $e) {
+        } catch (BagitServiceNotFoundException $e) {
             $message = ['message' => $e->getMessage()];
             return new DataResponse($message, Http::STATUS_NOT_FOUND);
         }
