@@ -3,7 +3,6 @@ namespace OCA\Bagit\Controller;
 
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
-use OCP\IServerContainer;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
 
@@ -15,15 +14,13 @@ class BagitController extends Controller
     use Errors;
 
     private $service;
-    private $activityManager;
 
-    public function __construct($AppName, IRequest $request, IServerContainer $server, BagitService $service)
+    public function __construct($AppName, IRequest $request, BagitService $service)
     {
 
         parent::__construct($AppName, $request);
 
         $this->service = $service;
-        $this->activityManager = $server->getActivityManager();
 
     }
 
@@ -48,7 +45,7 @@ class BagitController extends Controller
     /**
      * @NoAdminRequired
      *
-     * @param int $file_id
+     * @param int $id
      */
 
     public function show($id)
@@ -58,20 +55,11 @@ class BagitController extends Controller
 
     /**
      * @NoAdminRequired
-     *
-     * @param string $title
-     * @param string $content
      */
 
     public function create($id)
     {
         return $this->service->create($id);
-    }
-
-    public function validate()
-    {
-        $valid = $this->service->validate();
-        return $valid;
     }
 
 }

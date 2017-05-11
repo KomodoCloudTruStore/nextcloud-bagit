@@ -2,9 +2,6 @@
 
 use OCP\Util;
 
-$app = new App('bagit');
-$container = $app->getContainer();
-
 \OC::$server->getNavigationManager()->add(function () {
     $urlGenerator = \OC::$server->getURLGenerator();
     return [
