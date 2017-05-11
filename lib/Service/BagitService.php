@@ -19,7 +19,7 @@ class BagItService
     private $storage;
     protected $session;
 
-    public function __construct(IManager $activity, IUserSession $session, BagitBagMapper $mapper, BagItStorage $storage)
+    public function __construct(IManager $activity, IUserSession $session, BagItBagMapper $mapper, BagItStorage $storage)
     {
         $this->mapper = $mapper;
         $this->activityManager = $activity;

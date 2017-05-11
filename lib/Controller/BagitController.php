@@ -17,10 +17,10 @@ class BagItController extends Controller
     private $service;
     private $activityManager;
 
-    public function __construct($appName, IRequest $request, BagItService $service)
+    public function __construct($AppName, IRequest $request, BagItService $service)
     {
 
-        parent::__construct($appName, $request);
+        parent::__construct($AppName, $request);
 
         $this->service = $service;
         $this->activityManager = \OC::$server->getActivityManager();
