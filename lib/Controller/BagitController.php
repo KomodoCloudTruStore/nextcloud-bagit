@@ -8,7 +8,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
 
-use OCA\BagIt\Service\BagitService;
+use OCA\BagIt\Service\BagItService;
 
 class BagItController extends Controller
 {
@@ -18,7 +18,7 @@ class BagItController extends Controller
     private $service;
     private $activityManager;
 
-    public function __construct($appName, IRequest $request, BagitService $service)
+    public function __construct($appName, IRequest $request, BagItService $service)
     {
 
         parent::__construct($appName, $request);
