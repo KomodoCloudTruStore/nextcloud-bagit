@@ -3,11 +3,11 @@
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>bagit</id>
     <name>BagIt</name>
-    <summary>Nextcloud tutorial</summary>
+    <summary>Creates BagIt bags.</summary>
     <description><![CDATA[Nextcloud tutorial]]></description>
     <licence>agpl</licence>
     <author mail="ladd@austin.utexas.edu" homepage="https://github.com/laddhanson/notes/wiki">Ladd Hanson</author>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <namespace>BagIt</namespace>
     <category>office</category>
     <bugs>https://github.com/laddhanson/bagit/issues</bugs>
