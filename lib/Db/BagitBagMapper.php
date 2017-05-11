@@ -9,7 +9,7 @@ class BagItBagMapper extends Mapper
 {
     public function __construct(IDb $db)
     {
-        parent::__construct($db, 'bagit_bags', '\OCA\Bagit\Db\BagItBag');
+        parent::__construct($db, 'bagit_bags', '\OCA\BagIt\Db\BagItBag');
     }
 
     /**

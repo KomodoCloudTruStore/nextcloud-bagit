@@ -2,15 +2,14 @@
 
 namespace OCA\BagIt\Service;
 
-use Exception;
 use OCA\BagIt\Storage\BagItStorage;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 use OCP\Activity\IManager;
 use OCP\IUserSession;
 use OCP\IUser;
-use OCA\BagIt\Db\BagitBag;
-use OCA\BagIt\Db\BagitBagMapper;
+use OCA\BagIt\Db\BagItBag;
+use OCA\BagIt\Db\BagItBagMapper;
 
 class BagItService
 {
