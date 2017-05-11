@@ -10,6 +10,7 @@ use OCP\IUserSession;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\Node;
+use Punic\Exception;
 
 class BagitStorage {
 
@@ -224,7 +225,17 @@ class BagitStorage {
             $bagObj = [];
 
             $bagObj['id'] = $bag->getId();
-            $bagObj['name'] = $rootDataFolder->getName();
+
+            try {
+
+                $bagObj['name'] = $rootDataFolder->getName();
+
+            } catch (Exception $e) {
+
+                $bagObj['name'] = 'Unknown';
+
+            }
+
             $bagObj['replica_d'] = 100;
             $bagObj['replica_sm'] = 100;
             $bagObj['size'] = $bag->getSize();
