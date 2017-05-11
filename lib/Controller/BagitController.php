@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Bagit\Controller;
+namespace OCA\BagIt\Controller;
 
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
