@@ -4,6 +4,8 @@ namespace OCA\Bagit\Storage;
 
 use \DateTime;
 
+use OCP\IServerContainer;
+
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\Node;
@@ -13,11 +15,11 @@ class BagitStorage {
     private $userId;
     private $userFilesFolder;
 
-    public function __construct($UserId)
+    public function __construct(IServerContainer $server, $UserId)
     {
 
         $this->userId = $UserId;
-        $this->userFilesFolder = \OC::$server->getUserFolder($this->userId);
+        $this->userFilesFolder = $server->getUserFolder($this->userId);
         $this->userBagitFolder = $this->getUserBagItFolder();
 
     }

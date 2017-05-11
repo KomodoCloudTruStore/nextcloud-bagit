@@ -4,6 +4,4 @@ namespace OCA\Bagit\Service;
 
 use Exception;
 
-class BagitServiceException extends Exception
-{
-}
+class BagitServiceException extends Exception { }
