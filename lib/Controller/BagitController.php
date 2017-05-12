@@ -55,6 +55,17 @@ class BagitController extends Controller
 
     /**
      * @NoAdminRequired
+     *
+     * @param int $id
+     */
+
+    public function showUpdates($id)
+    {
+        return new DataResponse($this->service->showUpdates($id));
+    }
+
+    /**
+     * @NoAdminRequired
      */
 
     public function create($id)

@@ -83,6 +83,11 @@ class BagitService
         return $this->storage->getBagContents($id);
     }
 
+    public function showUpdates($id)
+    {
+        return $this->mapper->show($id);
+    }
+
     public function create($id)
     {
 

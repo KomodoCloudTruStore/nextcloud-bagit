@@ -53,11 +53,11 @@
                 _self.updateDisplay({
                     response: 'error',
                     msg: t('bagit', 'No Bags Found.')
-                });
+                }, fileInfo);
                 return;
             }
 
-            var url = OC.generateUrl('/apps/bagit/bags/' + fileInfo['id']),
+            var url = OC.generateUrl('/apps/bagit/bags/' + fileInfo['id'] + '/updates'),
                 _self = this;
 
             $.ajax({
@@ -69,7 +69,7 @@
                     _self.updateDisplay({
                         response: 'success',
                         msg: data
-                    });
+                    }, fileInfo);
                 }
             });
         },
@@ -77,7 +77,9 @@
         /**
          * display message from ajax callback
          */
-        updateDisplay: function (data) {
+        updateDisplay: function (data, fileInfo) {
+
+            var fileId = fileInfo['id'];
 
             if ('success' == data.response) {
 
@@ -163,8 +165,38 @@
                 buttonContainer.css('margin-top', '25px');
 
                 var updateBtn = $('<button></button>');
-                updateBtn.text('Update');
                 updateBtn.css('flex-grow', 1);
+
+
+                if (data.msg.length < 1) {
+
+                    updateBtn.text('Create');
+                    updateBtn.click(function() {
+
+                        var url = OC.generateUrl('/apps/bagit/bags/' + fileId),
+                            _self = this;
+
+                        $.ajax({
+
+                            type: 'POST',
+                            url: url,
+                            dataType: 'json',
+                            async: true,
+                            success: function(data) {
+
+                                window.location.href = OC.generateUrl('/apps/bagit/');
+
+                            }
+
+                        });
+
+                    })
+
+                } else {
+
+                    updateBtn.text('Update');
+
+                }
 
                 var validateBtn = $('<button></button>');
                 validateBtn.css('background-color', 'rgb(56, 195, 56)');
