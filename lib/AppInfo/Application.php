@@ -2,6 +2,7 @@
 namespace OCA\Bagit\AppInfo;
 
 use OCP\AppFramework\App;
+use OCP\AppFramework\IAppContainer;
 
 use OCA\Bagit\Controller\BagitController;
 use OCA\Bagit\Service\BagitService;
@@ -19,7 +20,7 @@ class Application extends App {
          * Controllers
          */
 
-        $container->registerService('BagitController', function($c){
+        $container->registerService('BagitController', function(IAppContainer $c){
             return new BagitController(
                 $c->query('AppName'),
                 $c->query('Request'),
@@ -31,7 +32,7 @@ class Application extends App {
          * Services
          */
 
-        $container->registerService('BagitService', function($c){
+        $container->registerService('BagitService', function(IAppContainer $c){
             return new BagitService(
                 $c->query('ServerContainer')->getActivityManager(),
                 $c->query('ServerContainer')->getUserSession(),
@@ -44,9 +45,9 @@ class Application extends App {
          * Mappers
          */
 
-        $container->registerService('BagitBagMapper', function($c){
+        $container->registerService('BagitBagMapper', function(IAppContainer $c){
             return new BagitBagMapper(
-                $c->query('ServerContainer')->getDb()
+                $c->query('ServerContainer')->getDatabaseConnection()
             );
         });
 
@@ -54,7 +55,7 @@ class Application extends App {
          * Storage
          */
 
-        $container->registerService('BagitStorage', function($c){
+        $container->registerService('BagitStorage', function(IAppContainer $c){
             return new BagitStorage(
                 $c->query('ServerContainer'),
                 $c->query('ServerContainer')->getUserSession()
