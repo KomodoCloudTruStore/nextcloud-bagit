@@ -1,6 +1,10 @@
 <?php
 
 use OCP\Util;
+use OCA\Bagit\AppInfo\Application;
+
+$app = new Application();
+$container = $app->getContainer();
 
 \OC::$server->getNavigationManager()->add(function () {
     $urlGenerator = \OC::$server->getURLGenerator();
@@ -10,7 +14,7 @@ use OCP\Util;
         'order' => 10,
         'href' => $urlGenerator->linkToRoute('bagit.bagit.index_view'),
         'icon' => $urlGenerator->imagePath('bagit', 'app.svg'),
-        'name' => \OC::$server->getL10N('bagit')->t('BagIt'),
+        'name' => \OC::$server->getL10N('bagit')->t('Bagit'),
     ];
 
 });

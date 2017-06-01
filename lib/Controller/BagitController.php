@@ -1,30 +1,26 @@
 <?php
+namespace OCA\Bagit\Controller;
 
-namespace OCA\BagIt\Controller;
-
-use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
 
-use OCA\BagIt\Service\BagItService;
+use OCA\Bagit\Service\BagitService;
 
-class BagItController extends Controller
+class BagitController extends Controller
 {
 
     use Errors;
 
     private $service;
-    private $activityManager;
 
-    public function __construct($appName, IRequest $request, BagItService $service)
+    public function __construct($AppName, IRequest $request, BagitService $service)
     {
 
-        parent::__construct($appName, $request);
+        parent::__construct($AppName, $request);
 
         $this->service = $service;
-        $this->activityManager = \OC::$server->getActivityManager();
-
 
     }
 
@@ -43,36 +39,38 @@ class BagItController extends Controller
      * @NoAdminRequired
      */
     public function index() {
-        return new JSONResponse($this->service->index());
+        return new DataResponse($this->service->index());
     }
 
     /**
      * @NoAdminRequired
      *
-     * @param int $file_id
+     * @param int $id
      */
 
     public function show($id)
     {
-        return new JSONResponse($this->service->show($id));
+        return new DataResponse($this->service->show($id));
     }
 
     /**
      * @NoAdminRequired
      *
-     * @param string $title
-     * @param string $content
+     * @param int $id
+     */
+
+    public function showUpdates($id)
+    {
+        return new DataResponse($this->service->showUpdates($id));
+    }
+
+    /**
+     * @NoAdminRequired
      */
 
     public function create($id)
     {
         return $this->service->create($id);
-    }
-
-    public function validate()
-    {
-        $valid = $this->service->validate();
-        return $valid;
     }
 
 }
