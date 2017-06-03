@@ -1,65 +1,47 @@
 <?php
-namespace OCA\Bagit\AppInfo;
+namespace OCA\BagIt\AppInfo;
+
+use OC\Files\View;
+
+use OCA\BagIt\Controller\PageController;
 
 use OCP\AppFramework\App;
-use OCP\AppFramework\IAppContainer;
+use OCP\Util;
 
-use OCA\Bagit\Controller\BagitController;
-use OCA\Bagit\Service\BagitService;
-use OCA\Bagit\Db\BagitBagMapper;
-use OCA\Bagit\Storage\BagitStorage;
+class Application extends App
+{
 
-class Application extends App {
-
-    public function __construct(array $urlParams=array())
+    public function __construct()
     {
-        parent::__construct('bagit', $urlParams);
+        parent::__construct('bagit');
+
         $container = $this->getContainer();
+        $server = $this->getContainer()->getServer();
 
-        /*
-         * Controllers
-         */
+		// Allow automatic DI for the View, until we migrated to Nodes API
 
-        $container->registerService('BagitController', function(IAppContainer $c){
-            return new BagitController(
-                $c->query('AppName'),
-                $c->query('Request'),
-                $c->query('BagitService')
-            );
-        });
+		$container->registerService(View::class, function() {
 
-        /**
-         * Services
-         */
+			return new View('');
 
-        $container->registerService('BagitService', function(IAppContainer $c){
-            return new BagitService(
-                $c->query('ServerContainer')->getActivityManager(),
-                $c->query('ServerContainer')->getUserSession(),
-                $c->query('BagitBagMapper'),
-                $c->query('BagitStorage')
-            );
-        });
+		}, false);
 
-        /**
-         * Mappers
-         */
+		// Aliases for the controllers so we can use the automatic DI
 
-        $container->registerService('BagitBagMapper', function(IAppContainer $c){
-            return new BagitBagMapper(
-                $c->query('ServerContainer')->getDatabaseConnection()
-            );
-        });
+		$container->registerAlias('PageController', PageController::class);
 
-        /**
-         * Storage
-         */
+		$eventDispatcher = $this->getContainer()->getServer()->getEventDispatcher();
 
-        $container->registerService('BagitStorage', function(IAppContainer $c){
-            return new BagitStorage(
-                $c->query('ServerContainer'),
-                $c->query('ServerContainer')->getUserSession()
-            );
-        });
+		$eventDispatcher->addListener('OCA\Files::loadAdditionalScripts', function () {
+
+			Util::addStyle('bagit', 'style');
+			Util::addScript('bagit', 'bagit.tabview');
+			Util::addScript('bagit', 'bagit.plugin');
+
+		});
+
+
+
     }
+
 }

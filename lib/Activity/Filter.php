@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-namespace OCA\Bagit\Activity;
+namespace OCA\BagIt\Activity;
 
 use OCP\Activity\IFilter;
 use OCP\IL10N;

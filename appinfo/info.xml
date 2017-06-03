@@ -3,26 +3,27 @@
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>bagit</id>
     <name>BagIt</name>
-    <summary>Nextcloud tutorial</summary>
-    <description><![CDATA[Nextcloud tutorial]]></description>
+    <namespace>BagIt</namespace>
+    <description>Allows users to create BagIt containers from items in the Files App.</description>
     <licence>agpl</licence>
-    <author mail="ladd@austin.utexas.edu" homepage="https://github.com/laddhanson/notes/wiki">Ladd Hanson</author>
-    <version>0.0.11</version>
-    <category>office</category>
-    <bugs>https://github.com/laddhanson/bagit/issues</bugs>
-    <activity>
-        <providers>
-            <provider>OCA\Bagit\Activity\Provider</provider>
-        </providers>
-        <settings>
-            <setting>OCA\Bagit\Activity\Setting</setting>
-        </settings>
-        <filters>
-            <filter>OCA\Bagit\Activity\Filter</filter>
-        </filters>
-    </activity>
+    <author homepage="https://github.com/KomodoCloudTruStore/nextcloud-bagit/graphs/contributors">KomodoCloudTruStore</author>
+    <version>0.1.7</version>
+    <category>tool</category>
+    <bugs>https://github.com/KomodoCloudTruStore/nextcloud-bagit/issues</bugs>
     <dependencies>
         <owncloud min-version="9.2"/>
         <nextcloud min-version="11" max-version="13"/>
     </dependencies>
+    <activity>
+        <providers>
+            <provider>OCA\BagIt\Activity\Provider</provider>
+        </providers>
+        <settings>
+            <setting>OCA\BagIt\Activity\Setting</setting>
+        </settings>
+        <filters>
+            <filter>OCA\BagIt\Activity\Filter</filter>
+        </filters>
+    </activity>
 </info>
+

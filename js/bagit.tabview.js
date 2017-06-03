@@ -6,6 +6,8 @@
 
         className: 'tab bagItTabView',
 
+        hashTypes: ['md5', 'sha256'],
+
         /**
          * Returns the tab label
          *
@@ -28,7 +30,11 @@
                 '</div>'
             );
 
-            this.show(this.getFileInfo());
+            if (this.canDisplay(this.getFileInfo())) {
+
+            	this.show(this.getFileInfo())
+
+			}
 
         },
 
@@ -41,7 +47,13 @@
          */
         canDisplay: function (fileInfo) {
 
-            return true;
+			if (fileInfo !== null) {
+				if (fileInfo.isDirectory()) {
+					return true;
+				}
+			}
+
+			return false;
         },
 
         /**
@@ -49,7 +61,7 @@
          */
         show: function (fileInfo) {
             // skip call if fileInfo is null
-            if (null == fileInfo) {
+            if (null === fileInfo) {
                 _self.updateDisplay({
                     response: 'error',
                     msg: t('bagit', 'No Bags Found.')
@@ -57,7 +69,7 @@
                 return;
             }
 
-            var url = OC.generateUrl('/apps/bagit/bags/' + fileInfo['id'] + '/updates'),
+            var url = OC.generateUrl('/apps/bagit/bags?fileId=' + fileInfo['id']),
                 _self = this;
 
             $.ajax({
@@ -69,6 +81,7 @@
                     _self.updateDisplay({
                         response: 'success',
                         msg: data
+
                     }, fileInfo);
                 }
             });
@@ -79,84 +92,12 @@
          */
         updateDisplay: function (data, fileInfo) {
 
+
+        	var _self = this;
+
             var fileId = fileInfo['id'];
 
-            if ('success' == data.response) {
-
-                var list = $('<ul></ul>');
-                list.attr('class', 'activities');
-
-                var empty = $('<li></li>');
-                empty.text('There are no bags for this resource.');
-
-                if (data.msg.length < 1) {
-
-                    empty.attr('class', 'activity box');
-
-                } else {
-
-                    empty.attr('class', 'empty hidden');
-
-                }
-
-                list.append(empty);
-
-                var baseUrl = window.location.protocol + '//' + window.location.hostname;
-
-                if (window.location.port !== '') {
-
-                    baseUrl = baseUrl + ":" + window.location.port
-
-                }
-
-                for (var i = 0; i < data.msg.length; i++) {
-
-                    var item = $('<li></li>');
-                    item.attr('class', 'activity box');
-
-                    var iconContainer = $('<div></div>');
-                    iconContainer.attr('class', 'activity-icon');
-
-                    var icon = $("<img>");
-
-                    var subj = $('<div></div>');
-                    subj.attr('class', 'activitysubject');
-                    subj.css('width', 'initial');
-
-                    if (i === (data.msg.length - 1)) {
-
-                        icon.attr('src', baseUrl + '/apps/bagit/img/bagit-black.svg');
-                        subj.text('Bag Created');
-
-                    } else {
-
-                        icon.attr('src', baseUrl + '/apps/files/img/add-color.svg');
-                        subj.text('Bag Updated');
-
-                    }
-
-                    date = new Date(data.msg[i]['timestamp']);
-
-                    var timestamp = $('<span></span>');
-                    timestamp.attr('class', 'activitytime has-tooltip live-relative-timestamp');
-                    timestamp.attr('data-timestamp', date.getTime() - (date.getTimezoneOffset() * 60000));
-                    timestamp.text('calculating...');
-
-                    var activityMessage = $('<div></div>');
-                    activityMessage.attr('class', 'activitymessage');
-
-                    iconContainer.append(icon);
-
-                    item.append(iconContainer);
-                    item.append(subj);
-                    item.append(timestamp);
-                    item.append(activityMessage);
-
-                    list.append(item);
-
-                }
-
-                $(".bagit-details-menu").append(list);
+            if ('success' === data.response) {
 
                 var buttonContainer = $('<div></div>');
                 buttonContainer.css('display', 'flex');
@@ -164,57 +105,149 @@
                 buttonContainer.css('justify-content', 'space-between');
                 buttonContainer.css('margin-top', '25px');
 
-                var updateBtn = $('<button></button>');
-                updateBtn.css('flex-grow', 1);
-
-
                 if (data.msg.length < 1) {
 
-                    updateBtn.text('Create');
-                    updateBtn.click(function() {
+					var createBtnMD5 = $('<button></button>');
+					createBtnMD5.css('flex-grow', 1);
 
-                        var url = OC.generateUrl('/apps/bagit/bags/' + fileId),
-                            _self = this;
+					createBtnMD5.text('Create with MD5');
+					createBtnMD5.click(function() {
 
-                        $.ajax({
+						var url = OC.generateUrl('/apps/bagit/bags?fileId=' + fileId + '&hash=md5');
 
-                            type: 'POST',
-                            url: url,
-                            dataType: 'json',
-                            async: true,
-                            success: function(data) {
+						var __self = this;
 
-                                window.location.href = OC.generateUrl('/apps/bagit/');
+						buttonContainer.empty();
 
-                            }
+						buttonContainer.attr('class', 'icon-loading');
+						buttonContainer.css('background-position', 'center');
+						buttonContainer.css('background-repeat', 'no-repeat');
 
-                        });
+						$.ajax({
 
-                    })
+							type: 'POST',
+							url: url,
+							dataType: 'json',
+							async: true,
+							success: function(data) {
+
+								$(__self).removeClass('icon-loading');
+								$(__self).attr('class', 'icon-checkmark');
+
+								setTimeout(function() {
+
+									_self.show(fileInfo);
+
+								}, 2000);
+
+							}
+
+						});
+
+					});
+
+					var createBtnSHA256 = $('<button></button>');
+					createBtnSHA256.css('flex-grow', 1);
+
+					createBtnSHA256.text('Create with SHA256');
+					createBtnSHA256.click(function() {
+
+						var url = OC.generateUrl('/apps/bagit/bags?fileId=' + fileId + '&hash=sha256');
+
+						var __self = this;
+
+						buttonContainer.empty();
+
+						buttonContainer.attr('class', 'icon-loading');
+						buttonContainer.css('background-position', 'center');
+						buttonContainer.css('background-repeat', 'no-repeat');
+
+						$.ajax({
+
+							type: 'POST',
+							url: url,
+							dataType: 'json',
+							async: true,
+							success: function(data) {
+
+								$(__self).removeClass('icon-loading');
+								$(__self).attr('class', 'icon-checkmark');
+
+								setTimeout(function() {
+
+									_self.show(fileInfo);
+
+								}, 2000);
+
+							}
+
+						});
+
+					});
+
+					buttonContainer.append(createBtnMD5);
+					buttonContainer.append(createBtnSHA256);
 
                 } else {
 
+					var validateBtn = $('<button></button>');
+					validateBtn.css('background-color', 'rgb(56, 195, 56)');
+					validateBtn.css('color', 'rgb(250,250,250)');
+					validateBtn.css('flex-grow', 1);
+					validateBtn.text('Validate');
+
+                	var updateBtn = $('<button></button>');
+					updateBtn.css('flex-grow', 1);
+
                     updateBtn.text('Update');
+					updateBtn.click(function() {
+
+						$(this).css('opacity', 0.0);
+						validateBtn.css('opacity', 0.0);
+
+						buttonContainer.attr('class', 'icon-loading');
+						buttonContainer.css('background-position', 'center');
+						buttonContainer.css('background-repeat', 'no-repeat');
+
+						setTimeout(function() {
+
+							buttonContainer.removeClass('icon-loading');
+							buttonContainer.attr('class', 'icon-checkmark');
+
+							setTimeout(function() {_self.show(fileInfo);}, 2000);
+
+						}, 2000);
+
+					});
+
+					validateBtn.click(function() {
+
+						$(this).css('opacity', 0.0);
+						updateBtn.css('opacity', 0.0);
+
+						buttonContainer.attr('class', 'icon-loading');
+						buttonContainer.css('background-position', 'center');
+						buttonContainer.css('background-repeat', 'no-repeat');
+
+						setTimeout(function() {
+
+							buttonContainer.removeClass('icon-loading');
+							buttonContainer.attr('class', 'icon-checkmark');
+
+							setTimeout(function() {_self.show(fileInfo);}, 2000);
+
+						}, 2000);
+
+					});
+
+					buttonContainer.append(updateBtn);
+					buttonContainer.append(validateBtn);
 
                 }
 
-                var validateBtn = $('<button></button>');
-                validateBtn.css('background-color', 'rgb(56, 195, 56)');
-                validateBtn.css('color', 'rgb(250,250,250)');
-                validateBtn.css('flex-grow', 1);
-                validateBtn.text('Validate');
-
-                var DeleteBtn = $('<button></button>');
-                DeleteBtn.css('background-color', 'rgb(241, 51, 51)');
-                DeleteBtn.css('color', 'rgb(250,250,250)');
-                DeleteBtn.css('flex-grow', 1);
-                DeleteBtn.text('Delete');
-
-                buttonContainer.append(updateBtn);
-                buttonContainer.append(validateBtn);
-                buttonContainer.append(DeleteBtn);
-
-                $(".bagit-details-menu").append(buttonContainer);
+				var menu = $(".bagit-details-menu");
+                menu.empty();
+				menu.append(buttonContainer);
 
             }
 

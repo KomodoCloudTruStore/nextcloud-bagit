@@ -19,7 +19,7 @@
  *
  */
 
-namespace OCA\Bagit\Activity;
+namespace OCA\BagIt\Activity;
 
 use OCP\Activity\IEvent;
 use OCP\Activity\IEventMerger;
@@ -74,7 +74,7 @@ class Provider implements IProvider
      */
     public function parse($language, IEvent $event, IEvent $previousEvent = null)
     {
-        if ($event->getApp() !== 'bagit_bags') {
+        if ($event->getApp() !== 'bags') {
             throw new \InvalidArgumentException();
         }
         if ($this->activityManager->isFormattingFilteredObject()) {

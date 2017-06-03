@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Bagit\Activity;
+namespace OCA\BagIt\Activity;
 
 use OCP\Activity\ISetting;
 use OCP\IL10N;
@@ -24,7 +24,7 @@ class Setting implements ISetting
      */
     public function getIdentifier()
     {
-        return 'bagit_bags';
+        return 'bags';
     }
 
     /**
@@ -33,7 +33,7 @@ class Setting implements ISetting
      */
     public function getName()
     {
-        return $this->l->t('<strong>Bagit Bag</strong>');
+        return $this->l->t('<strong>BagIt Bag</strong>');
     }
 
     /**
