@@ -28,171 +28,199 @@
             var bagListTable = $('#bagList');
             bagListTable.empty();
 
-            var baseUrl = window.location.protocol + '//' + window.location.hostname;
+            for (var i = 0; i < data.length; i++) {
 
-            if (window.location.port !== '') {
+				var tr = $('<tr></tr>');
+				tr.attr('class', 'ui-draggable');
 
-                baseUrl = baseUrl + ":" + window.location.port
+				var filename = $('<td></td>');
+				filename.attr('class', 'filename ui-draggable');
 
-            }
+				var star = $('<a href="#" class="action action-favorite"></a>');
+				star.css('display', 'block');
+				star.css('float', 'left');
+				star.css('width', '30px');
+				star.css('line-height', '100%');
+				star.css('text-align', 'center');
+				star.css('padding', '17px', '8px');
 
-            for (bag in data) {
+				var innerStar = $('<span class="icon icon-star"></span><span class="hidden-visually"></span>');
 
-                row = data[bag];
+				star.append(innerStar);
 
-                var tr = $('<tr></tr>');
-                tr.attr('class', 'ui-draggable');
+				var label = $('<label></label>');
+				label.attr('for', 'bag-' + data[i]['id']);
+				label.css('background-position', '30px 30px');
+				label.css('height', '50px');
+				label.css('position', 'absolute');
+				label.css('width', '50px');
+				label.css('z-index', '5');
 
-                var filename = $('<td></td>');
-                filename.attr('class', 'filename ui-draggable');
+				var thumbnail = $('<div></div>');
 
-                var star = $('<a href="#" class="action action-favorite"></a>');
-                star.css('display', 'block');
-                star.css('float', 'left');
-                star.css('width', '30px');
-                star.css('line-height', '100%');
-                star.css('text-align', 'center');
-                star.css('padding', '17px', '8px');
+				var nameLink = $('<a></a>');
+				nameLink.attr('class', 'name');
+				nameLink.css('left', '50px');
+				nameLink.css('margin-right', '50px');
 
-                var innerStar = $('<span class="icon icon-star"></span><span class="hidden-visually"></span>');
+				var hiddenSpan = $('<span></span>');
+				hiddenSpan.attr('class', 'hidden-visually');
+				hiddenSpan.text('Select');
 
-                star.append(innerStar);
+				var nameText = $('<span></span>');
+				nameText.attr('class', 'nametext');
 
-                var label = $('<label></label>');
-                label.attr('for', 'bag-' + row['id']);
-                label.css('background-position', '30px 30px');
-                label.css('height', '50px');
-                label.css('position', 'absolute');
-                label.css('width', '50px');
-                label.css('z-index', '5');
+				var innerNameText = $('<span></span>');
+				innerNameText.attr('class', 'innernametext');
+				innerNameText.text(data[i]['name']);
 
-                var thumbnail = $('<div></div>');
+				var bagActions = $('<span></span>');
+				bagActions.attr('class', 'fileactions');
+				bagActions.css('position', 'absolute');
+				bagActions.css('right', '0');
 
-                if (row['type'] === 'bag') {
+				if (data[i]['type'] === 'bag') {
 
-                    thumbnail.attr('class', 'thumbnail nav-icon-bagit-blue');
+					thumbnail.attr('class', 'thumbnail nav-icon-bagit-blue');
+					nameLink.attr('href', OC.generateUrl('/apps/bagit/bags/' + data[i]['id']));
+					nameLink.click(function($e) {
 
-                }
+						$e.preventDefault();
+						self.fetchBagContent($(this).attr('href'));
 
-                if (row['type'] === 'dir') {
+					});
 
-                    thumbnail.attr('class', 'thumbnail icon-filetype-folder');
+					var validate = $('<a></a>');
+					validate.attr('href', OC.generateUrl('/apps/bagit/bags/' + data[i]['id']));
+					validate.attr('class', 'action action-share permanent');
 
-                }
+					validate.click(function($e) {
 
-                if (row['type'] === 'file') {
+						$e.preventDefault();
 
-                    thumbnail.attr('class', 'thumbnail icon-filetype-text');
+						console.log('validate');
 
-                }
+						$e.stopPropagation();
 
-                var hiddenSpan = $('<span></span>');
-                hiddenSpan.attr('class', 'hidden-visually');
-                hiddenSpan.text('Select');
+						// self.fetchBagContent($(this).attr('href'));
 
-                label.append(thumbnail);
-                label.append(hiddenSpan);
+					});
 
-                var nameLink = $('<a></a>');
-                nameLink.attr('class', 'name');
-                nameLink.attr('href', OC.generateUrl('/apps/bagit/bags/' + row['id']));
-                nameLink.css('left', '50px');
-                nameLink.css('margin-right', '50px');
+					var validateSpan = $('<span class="icon icon-checkmark"></span><span class="hidden-visually">Validate</span>');
 
-                nameLink.click(function($e) {
+					validate.append(validateSpan);
 
-                    $e.preventDefault();
+					var deleteAction = $('<a></a>');
+					deleteAction.attr('href', OC.generateUrl('/apps/bagit/bags/' + data[i]['id']));
+					deleteAction.attr('class', 'action action-share permanent');
 
-                    self.fetchBagContent($(this).attr('href'));
+					deleteAction.click(function($e) {
 
-                });
+						$e.preventDefault();
 
-                var nameText = $('<span></span>');
-                nameText.attr('class', 'nametext');
+						self.deleteBag($(this).attr('href'));
 
-                var innerNameText = $('<span></span>');
-                innerNameText.attr('class', 'innernametext');
-                innerNameText.text(row['name']);
+						$e.stopPropagation();
 
-                nameText.append(innerNameText);
+					});
 
-                var bagActions = $('<span></span>');
-                bagActions.attr('class', 'fileactions');
-                bagActions.css('position', 'absolute');
-                bagActions.css('right', '0');
+					var deleteActionSpan = $('<span class="icon icon-delete"></span><span class="hidden-visually">Delete</span>');
 
-                var details = $('<a></a>');
-                details.attr('href', '#');
-                details.attr('class', 'action action-share permanent');
+					deleteAction.append(deleteActionSpan);
 
-                var detailSpan = $('<span class="icon icon-details"></span><span class="hidden-visually">Details</span>');
+					bagActions.append(validate);
+					bagActions.append(deleteAction);
 
-                details.append(detailSpan);
+				}
 
-                var validate = $('<a></a>');
-                validate.attr('href', '#');
-                validate.attr('class', 'action action-share permanent');
+				if (data[i]['type'] === 'dir') {
 
-                var validateSpan = $('<span class="icon icon-checkmark"></span><span class="hidden-visually">Validate</span>');
+					thumbnail.attr('class', 'thumbnail icon-filetype-folder');
+					nameLink.attr('href', OC.generateUrl('/apps/bagit/bags/' + data[i]['id']));
+					nameLink.click(function($e) {
 
-                validate.append(validateSpan);
+						$e.preventDefault();
 
-                var deleteAction = $('<a></a>');
-                deleteAction.attr('href', '#');
-                deleteAction.attr('class', 'action action-share permanent');
+						self.fetchBagContent($(this).attr('href'));
 
-                var deleteActionSpan = $('<span class="icon icon-delete"></span><span class="hidden-visually">Delete</span>');
+					});
 
-                deleteAction.append(deleteActionSpan);
+				}
 
-                bagActions.append(details);
-                bagActions.append(validate);
-                bagActions.append(deleteAction);
+				if (data[i]['type'] === 'file') {
+
+					thumbnail.attr('class', 'thumbnail icon-filetype-text');
+
+				}
+
+				label.append(thumbnail);
+				label.append(hiddenSpan);
+
+				nameText.append(innerNameText);
 
                 nameLink.append(nameText);
-                nameLink.append(bagActions);
+				nameLink.append(bagActions);
 
-                filename.append(star);
-                filename.append(label);
-                filename.append(nameLink);
+				filename.append(star);
+				filename.append(label);
+				filename.append(nameLink);
 
-                var replicaD = $('<td></td>');
-                replicaD.attr('class', 'filesize');
-                replicaD.css('color', 'rgb(145,145,145)');
-                replicaD.text(row['replica_d'] + ' %');
+				var replicaD = $('<td></td>');
+				replicaD.attr('class', 'filesize');
+				replicaD.css('color', 'rgb(145,145,145)');
+				replicaD.text(data[i]['replica_d'] + ' %');
 
-                var replicaSm = $('<td></td>');
-                replicaSm.attr('class', 'filesize');
-                replicaSm.css('color', 'rgb(145,145,145)');
-                replicaSm.text(row['replica_sm'] + ' %');
+				var replicaSm = $('<td></td>');
+				replicaSm.attr('class', 'filesize');
+				replicaSm.css('color', 'rgb(145,145,145)');
+				replicaSm.text(data[i]['replica_sm'] + ' %');
 
-                var fileSize = $('<td></td>');
-                fileSize.attr('class', 'filesize');
-                fileSize.css('color', 'rgb(145,145,145)');
-                fileSize.text(row['size'] + ' b');
+				var fileSize = $('<td></td>');
+				fileSize.attr('class', 'filesize');
+				fileSize.css('color', 'rgb(145,145,145)');
+				fileSize.text(data[i]['size'] + ' b');
 
-                var modified = $('<td></td>');
-                modified.attr('class', 'date');
+				var modified = $('<td></td>');
+				modified.attr('class', 'date');
 
-                var date = new Date(row['timestamp']);
+				var date = new Date(data[i]['timestamp']);
 
-                var innerModified = $('<span></span>');
-                innerModified.attr('class', 'modified live-relative-timestamp');
-                innerModified.attr('data-timestamp', date.getTime() - (date.getTimezoneOffset() * 60000));
-                innerModified.css('color', 'rgb(1,1,1)');
-                innerModified.text('Calculating...');
+				var innerModified = $('<span></span>');
+				innerModified.attr('class', 'modified live-relative-timestamp');
+				innerModified.attr('data-timestamp', date.getTime() - (date.getTimezoneOffset() * 60000));
+				innerModified.css('color', 'rgb(1,1,1)');
+				innerModified.text('Calculating...');
 
-                modified.append(innerModified);
+				modified.append(innerModified);
 
-                tr.append(filename);
-                tr.append(replicaD);
-                tr.append(replicaSm);
-                tr.append(fileSize);
-                tr.append(modified);
+				tr.append(filename);
+				tr.append(replicaD);
+				tr.append(replicaSm);
+				tr.append(fileSize);
+				tr.append(modified);
 
-                bagListTable.append(tr);
+				bagListTable.append(tr);
 
             }
+
+        },
+        deleteBag: function(url) {
+
+			_self = this;
+
+			$.ajax({
+
+				type: 'DELETE',
+				url: url,
+				async: true,
+				success: function(data) {
+
+					var parsed = JSON.parse(data);
+					_self.populateList(parsed);
+
+				}
+
+			});
 
         },
         fetchBagContent: function (url) {
@@ -226,8 +254,7 @@
                 async: true,
                 success: function(data) {
 
-                   var parsed = JSON.parse(data);
-                    _self.populateList(parsed);
+                    _self.populateList(data);
 
                 }
 
