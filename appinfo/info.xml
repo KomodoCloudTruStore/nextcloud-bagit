@@ -7,7 +7,7 @@
     <description>Allows users to create BagIt containers from items in the Files App.</description>
     <licence>agpl</licence>
     <author homepage="https://github.com/KomodoCloudTruStore/nextcloud-bagit/graphs/contributors">KomodoCloudTruStore</author>
-    <version>0.1.7</version>
+    <version>0.1.8</version>
     <category>tool</category>
     <bugs>https://github.com/KomodoCloudTruStore/nextcloud-bagit/issues</bugs>
     <dependencies>

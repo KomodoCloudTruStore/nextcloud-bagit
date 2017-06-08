@@ -202,6 +202,8 @@
                     updateBtn.text('Update');
 					updateBtn.click(function() {
 
+						var url = OC.generateUrl('/apps/bagit/bags?fileId=' + fileId);
+
 						$(this).css('opacity', 0.0);
 						validateBtn.css('opacity', 0.0);
 
@@ -209,18 +211,32 @@
 						buttonContainer.css('background-position', 'center');
 						buttonContainer.css('background-repeat', 'no-repeat');
 
-						setTimeout(function() {
+						$.ajax({
 
-							buttonContainer.removeClass('icon-loading');
-							buttonContainer.attr('class', 'icon-checkmark');
+							type: 'PATCH',
+							url: url,
+							dataType: 'json',
+							async: true,
+							success: function(data) {
 
-							setTimeout(function() {_self.show(fileInfo);}, 2000);
+								buttonContainer.removeClass('icon-loading');
+								buttonContainer.attr('class', 'icon-checkmark');
 
-						}, 2000);
+								setTimeout(function() {
+
+									_self.show(fileInfo);
+
+								}, 2000);
+
+							}
+
+						});
 
 					});
 
 					validateBtn.click(function() {
+
+						var url = OC.generateUrl('/apps/bagit/bags?fileId=' + fileId + '&validate=true');
 
 						$(this).css('opacity', 0.0);
 						updateBtn.css('opacity', 0.0);
@@ -229,14 +245,26 @@
 						buttonContainer.css('background-position', 'center');
 						buttonContainer.css('background-repeat', 'no-repeat');
 
-						setTimeout(function() {
+						$.ajax({
 
-							buttonContainer.removeClass('icon-loading');
-							buttonContainer.attr('class', 'icon-checkmark');
+							type: 'PATCH',
+							url: url,
+							dataType: 'json',
+							async: true,
+							success: function(data) {
 
-							setTimeout(function() {_self.show(fileInfo);}, 2000);
+								buttonContainer.removeClass('icon-loading');
+								buttonContainer.attr('class', 'icon-checkmark');
 
-						}, 2000);
+								setTimeout(function() {
+
+									_self.show(fileInfo);
+
+								}, 2000);
+
+							}
+
+						});
 
 					});
 

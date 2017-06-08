@@ -79,9 +79,17 @@ class BagController extends Controller {
      * @NoAdminRequired
      */
 
-    public function update() {
+    public function update($fileId, $validate=false) {
 
-        return [];
+		if ($validate) {
+
+			return $this->service->validate($fileId, $this->userId);
+
+		} else {
+
+			return $this->service->update($fileId, $this->userId);
+
+		}
 
     }
 

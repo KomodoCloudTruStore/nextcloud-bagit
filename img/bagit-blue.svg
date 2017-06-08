@@ -1,9 +1,12 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 511.9939">
-    <defs>
-        <style>.cls-1{fill:#0082c9;}</style>
-    </defs>
-    <title>bagit-blue</title>
-    <path class="cls-1"
-          d="M336,111.797a16,16,0,0,1,0,32H176a16,16,0,0,1,0-32Zm9.25,48H166.734C87.469,217.609,32,340.141,32,417.953c0,104.656,100.281,93.5,224,93.5s224,11.156,224-93.5C480,340.141,424.531,217.609,345.25,159.797Zm-178.516-64H345.25S416,34.078,384,7.078s-103,30-128,28c-25,2-96-55-128-28S166.734,95.797,166.734,95.797Z"
-          transform="translate(-32 0.1964)"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 20.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 448 512" style="enable-background:new 0 0 448 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#0082C9;}
+</style>
+<title>bagit-blue</title>
+<path class="st0" d="M304,112c8.8,0,16,7.2,16,16s-7.2,16-16,16H144c-8.8,0-16-7.2-16-16s7.2-16,16-16H304z M313.2,160H134.7
+	C55.5,217.8,0,340.3,0,418.1c0,104.7,100.3,93.5,224,93.5s224,11.2,224-93.5C448,340.3,392.5,217.8,313.2,160z M134.7,96h178.5
+	c0,0,70.8-61.7,38.8-88.7s-103,30-128,28c-25,2-96-55-128-28S134.7,96,134.7,96z"/>
 </svg>

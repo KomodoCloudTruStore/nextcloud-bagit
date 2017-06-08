@@ -24,7 +24,7 @@ class Setting implements ISetting
      */
     public function getIdentifier()
     {
-        return 'bags';
+        return 'bagit';
     }
 
     /**
@@ -33,7 +33,7 @@ class Setting implements ISetting
      */
     public function getName()
     {
-        return $this->l->t('<strong>BagIt Bag</strong>');
+        return $this->l->t('<strong>BagIt Bags</strong> for files');
     }
 
     /**
