@@ -43,7 +43,7 @@ class Filter implements IFilter
      */
     public function getIdentifier()
     {
-        return 'bagit_bags';
+        return 'bagit';
     }
 
     /**
@@ -89,6 +89,6 @@ class Filter implements IFilter
      */
     public function allowedApps()
     {
-        return ['bagit', 'files'];
+        return ['bagit'];
     }
 }

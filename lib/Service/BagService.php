@@ -27,7 +27,7 @@ class BagService
 
     }
 
-	public function create($fileId, $userId, $hash='md5') {
+	public function create($fileId, $userId, $hash='md5', $createEvent=true) {
 
 		$userFolder = $this->server->getUserFolder($userId)->getParent();
 		$bagStorage = new BagStorage($userFolder);
@@ -44,7 +44,11 @@ class BagService
 		$bag->setStatus('created');
 		$bag->setTimestamp(date("Y-m-d H:i:s"));
 
-		$this->createActivityEvent($userId, 'Bag Created', $bagId);
+		if ($createEvent) {
+
+			$this->createActivityEvent($userId, 'create_bagit_subject', $fileId);
+
+		}
 
 		return $this->mapper->insert($bag);
 	}
@@ -52,15 +56,20 @@ class BagService
 	public function createActivityEvent($userId, $subject, $fileId)
 	{
 
+		$userFolder = $this->server->getUserFolder($userId)->getParent();
+		$originalFolder = $userFolder->getById($fileId)[0];
+
+		$path = $originalFolder->getInternalPath();
+
+
 		$event = $this->activity->generateEvent();
 
 		$event->setApp('bagit');
-		$event->setType('bags');
+		$event->setType('bagit');
 		$event->setAffectedUser($userId);
 		$event->setAuthor($userId);
-		$event->setTimestamp(time());
-		$event->setSubject($subject);
-		$event->setObject('files', $fileId);
+		$event->setSubject($subject, [$userId, $path]);
+		$event->setObject('files', (int) $fileId);
 
 		$this->activity->publish($event);
 
@@ -129,9 +138,16 @@ class BagService
 		return $bagStorage->getBagContents($fileId);
 	}
 
-	public function update($fileId, $bagId, $userId) {
+	public function update($fileId, $userId) {
 
-        try {
+		$bags = $this->mapper->findByFileId($fileId, $userId);
+
+		$bagId = $bags[0]->getBagId();
+
+    	$this->delete($bagId, $userId, false);
+    	$this->create($fileId, $userId, 'md5', false);
+
+    	try {
 
             $bag = new Bag();
 
@@ -141,7 +157,7 @@ class BagService
             $bag->setStatus('updated');
             $bag->setTimestamp(date("Y-m-d H:i:s"));
 
-			$this->createActivityEvent($userId, 'Bag Updated', $bagId);
+			$this->createActivityEvent($userId, 'update_bagit_subject', $fileId);
 
             return $this->mapper->insert($bag);
 
@@ -153,12 +169,43 @@ class BagService
 
     }
 
-    public function delete($bagId, $userId) {
+	public function validate($fileId, $userId) {
+
+		$bags = $this->mapper->findByFileId($fileId, $userId);
+
+		$bagId = $bags[0]->getBagId();
+
+    	try {
+
+			$bag = new Bag();
+
+			$bag->setUserId($userId);
+			$bag->setFileId($fileId);
+			$bag->setBagId($bagId);
+			$bag->setStatus('validated');
+			$bag->setTimestamp(date("Y-m-d H:i:s"));
+
+			$this->createActivityEvent($userId, 'validate_bagit_subject', $fileId);
+
+			return $this->mapper->insert($bag);
+
+		} catch(Exception $e) {
+
+			$this->handleException($e);
+			return false;
+
+		}
+
+	}
+
+    public function delete($bagId, $userId, $createEvent=true) {
         try {
             $bags = $this->mapper->findByBagId($bagId, $userId);
+
+            $fileId = $bags[0]->getFileId();
             foreach ($bags as $bag) {
 
-				$this->mapper->delete($bag);
+            	$this->mapper->delete($bag);
 
 			}
 
@@ -167,7 +214,11 @@ class BagService
 
 			$bagStorage->deleteBag($bagId);
 
-			$this->createActivityEvent($userId, 'Bag Deleted', $bagId);
+			if ($createEvent) {
+
+				$this->createActivityEvent($userId, 'delete_bagit_subject', $fileId);
+
+			}
 
 			return true;
 
