@@ -35,14 +35,19 @@ class BagService
 		$bagFolder = $bagStorage->createBag($fileId, $hash);
 		$bagId = $bagFolder->getId();
 
+		$bagHash = $bagStorage->getHash($bagFolder, $hash);
+
+		$createdDate = date("Y-m-d H:i:s");
 
 		$bag = new Bag();
 
 		$bag->setFileId($fileId);
 		$bag->setBagId($bagId);
 		$bag->setUserId($userId);
-		$bag->setStatus('created');
-		$bag->setTimestamp(date("Y-m-d H:i:s"));
+		$bag->setHashType($hash);
+		$bag->setHashValue($bagHash);
+		$bag->setCreated($createdDate);
+		$bag->setUpdated($createdDate);
 
 		if ($createEvent) {
 
@@ -87,19 +92,23 @@ class BagService
 
         	$folder = $userFolder->getById($bag->getBagId())[0];
 
-			$item = [
+			if (isset($folder)) {
 
-				'id' => $bag->getBagId(),
-				'name' => $folder->getName(),
-				'replica_d' => 0,
-				'replica_sm' => 0,
-				'size' => $folder->getSize(),
-				'timestamp' => $bag->getTimestamp(),
-				'type' => 'bag'
+				$item = [
 
-			];
+					'id' => $bag->getBagId(),
+					'name' => $folder->getName(),
+					'replica_d' => 0,
+					'replica_sm' => 0,
+					'size' => $folder->getSize(),
+					'timestamp' => $bag->getCreated(),
+					'type' => 'bag'
 
-			array_push($items, $item);
+				];
+
+				array_push($items, $item);
+
+			}
 
 		}
 
@@ -144,22 +153,31 @@ class BagService
 
 		$bagId = $bags[0]->getBagId();
 
-    	$this->delete($bagId, $userId, false);
-    	$this->create($fileId, $userId, 'md5', false);
+		$hashType = $bags[0]->getHashType();
+
+		$userFolder = $this->server->getUserFolder($userId)->getParent();
+		$bagStorage = new BagStorage($userFolder);
+
+		$bagStorage->deleteBag($bagId);
+
+		$bagFolder = $bagStorage->createBag($fileId, $hashType);
+
+		$bagHash = $bagStorage->getHash($bagFolder, $hashType);
+
+		$bagId = $bagFolder->getId();
+
 
     	try {
 
-            $bag = new Bag();
+            $bag = $bags[0];
 
-            $bag->setUserId($userId);
-			$bag->setFileId($fileId);
 			$bag->setBagId($bagId);
-            $bag->setStatus('updated');
-            $bag->setTimestamp(date("Y-m-d H:i:s"));
+            $bag->setHashValue($bagHash);
+            $bag->setUpdated(date("Y-m-d H:i:s"));
 
 			$this->createActivityEvent($userId, 'update_bagit_subject', $fileId);
 
-            return $this->mapper->insert($bag);
+            return $this->mapper->update($bag);
 
         } catch(Exception $e) {
 
@@ -174,24 +192,37 @@ class BagService
 		$bags = $this->mapper->findByFileId($fileId, $userId);
 
 		$bagId = $bags[0]->getBagId();
+		$hashType = $bags[0]->getHashType();
+		$hashValue = $bags[0]->getHashValue();
 
-    	try {
+		$userFolder = $this->server->getUserFolder($userId)->getParent();
+		$bagStorage = new BagStorage($userFolder);
 
-			$bag = new Bag();
+		$bagFolder = $bagStorage->getBagItAppFolder()->getById($bagId);
 
-			$bag->setUserId($userId);
-			$bag->setFileId($fileId);
-			$bag->setBagId($bagId);
-			$bag->setStatus('validated');
-			$bag->setTimestamp(date("Y-m-d H:i:s"));
+		$bagHash = $bagStorage->getHash($bagFolder[0], $hashType);
 
-			$this->createActivityEvent($userId, 'validate_bagit_subject', $fileId);
+		if ($hashValue == $bagHash) {
 
-			return $this->mapper->insert($bag);
+			try {
 
-		} catch(Exception $e) {
+				$bag = $bags[0];
 
-			$this->handleException($e);
+				$bag->setUpdated(date("Y-m-d H:i:s"));
+
+				$this->createActivityEvent($userId, 'validate_bagit_subject', $fileId);
+
+				return $this->mapper->update($bag);
+
+			} catch(Exception $e) {
+
+				$this->handleException($e);
+				return false;
+
+			}
+
+		} else {
+
 			return false;
 
 		}

@@ -10,24 +10,49 @@ use OCA\BagIt\Service\BagService;
 
 class BagServiceTest extends PHPUnit_Framework_TestCase {
 
-    private $service;
+	/**
+	 * @var \OCP\IServerContainer
+	 */
+
+	private $server;
+
+	/**
+	 * @var \OCP\Activity\IManager
+	 */
+    private $activity;
+
+    /**
+     * @var \OCA\BagIt\Db\BagMapper
+     */
     private $mapper;
+
+	/**
+	 * @var \OCA\BagIt\Service\BagService
+	 */
+
+	protected $service;
+
     private $userId = 'test-user';
 
     public function setUp() {
 
-        $this->mapper = $this->getMockBuilder('OCA\BagIt\Db\BagMapper')
+        $this->server = $this->getMockBuilder('OCP\IServerContainer')->getMock();
+        $this->activity = $this->getMockBuilder('OCP\Activity\IManager')->getMock();
+
+    	$this->mapper = $this->getMockBuilder('OCA\BagIt\Db\BagMapper')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->service = new BagService($this->mapper);
+        $this->service = new BagService($this->server, $this->activity, $this->mapper);
 
     }
 
-    public function testInit()
+    public function testFindAll()
     {
 
-        $this->assertTrue(true);
+		$items = $this->service->findAll('admin');
+
+    	$this->assertTrue(true);
 
     }
 
