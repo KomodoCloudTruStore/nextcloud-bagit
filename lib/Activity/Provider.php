@@ -184,7 +184,7 @@ class Provider implements IProvider
 
 		} elseif ($event->getSubject() === 'validate_bagit_subject') {
 
-			$activityVerb = 'validated this Bag.';
+			$activityVerb = 'validated the bag for';
 			$event->setIcon($this->url->getAbsoluteURL($this->url->imagePath('bagit', 'bagit-validate.svg')));
 
 		} elseif ($event->getSubject() === 'update_bagit_subject') {

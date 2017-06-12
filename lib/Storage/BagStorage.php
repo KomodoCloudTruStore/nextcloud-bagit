@@ -163,11 +163,29 @@ class BagStorage
 	}
 
 	public function getHash($file, $hash='md5') {
-		if ($hash == 'sha256') {
-			return $this->getSHA256($file);
-		} else {
-			return $this->getMD5($file);
+
+		try {
+
+			if ($this->isFolder($file)) {
+				$file = $file->get('manifest-' . $hash . '.txt');
+			}
+
+			if ($hash == 'sha256') {
+				return $this->getSHA256($file);
+			} else {
+				return $this->getMD5($file);
+			}
+
+		} catch(\Exception $e) {
+
+			if ($hash == 'sha256') {
+				return $this->getSHA256($file);
+			} else {
+				return $this->getMD5($file);
+			}
+
 		}
+
 	}
 
 	public function getMD5(File $file) {

@@ -11,8 +11,10 @@ class Bag extends Entity implements JsonSerializable
     protected $userId;
 	protected $fileId;
 	protected $bagId;
-    protected $status;
-    protected $timestamp;
+    protected $hashType;
+	protected $hashValue;
+    protected $created;
+	protected $updated;
 
 
     public function jsonSerialize()
@@ -24,8 +26,10 @@ class Bag extends Entity implements JsonSerializable
             'user_id' => $this->userId,
 			'file_id' => $this->fileId,
 			'bag_id' => $this->bagId,
-            'status' => $this->status,
-            'timestamp' => $this->timestamp
+			'hash_type' => $this->hashType,
+            'hash_value' => $this->hashValue,
+            'created' => $this->created,
+			'updated' => $this->updated
 
         ];
 

@@ -30,13 +30,24 @@
                 <notnull>true</notnull>
             </field>
             <field>
-                <name>status</name>
+                <name>hash_type</name>
                 <type>text</type>
                 <length>15</length>
                 <notnull>true</notnull>
             </field>
             <field>
-                <name>timestamp</name>
+                <name>hash_value</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>created</name>
+                <type>timestamp</type>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>updated</name>
                 <type>timestamp</type>
                 <notnull>true</notnull>
             </field>
